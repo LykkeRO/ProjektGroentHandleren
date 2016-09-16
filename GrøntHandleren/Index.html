@@ -1,0 +1,320 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8" />
+    <link href="Style/StyleSheet.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <div class="container">
+        <h4>Grønthandleren</h4>
+        <button type="button" class="btn btn-primary removedOnLogedIn" data-target="#loginModal" data-toggle="modal">Login</button>
+
+        <button type="button" class="btn btn-primary" data-target="#registerModal" data-toggle="modal">Registrer</button>
+
+        <button type="button" id="logud" class="btn btn-primary authorize">Logud</button>
+     
+        <div class="row">
+
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Produkter
+                    </div>
+                    <div class="panel-body">
+                        <ul id="products" class="list-group"></ul>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Indkøbskurv
+                    </div>
+                    <div class="panel-body">
+                        <ul id="cartList" class="list-group"></ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="panel panel-default authorize">
+                    <div class="panel-heading">
+                        Opret
+                    </div>
+                    <div class="panel-body">
+                        <form id="createProduct">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="name" placeholder="Navn" />
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="price" placeholder="Pris" />
+                            </div>
+
+                            <button type="button" id="btnCreate" class="btn btn-success btn-xs">Opret</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="panel panel-default authorize">
+                    <div class="panel-heading">
+                        Rediger
+                    </div>
+                    <div class="panel-body">
+                        <form id="updateProduct">
+                            <input type="hidden" name="id" id="UpId" placeholder="Navn" />
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="name" id="UpName" placeholder="Navn" />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="price" id="UpPrice" placeholder="Pris" />
+                            </div>
+                            <button type="button" id="btnUpdate" class="btn btn-primary btn-xs">Update</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-sm-5">
+                <div class="panel panel-default">
+                    <div class="panel panel-heading">
+                        Kontakt informationer
+                    </div>
+                    <div class="panel-body">
+                        <form id="customerInfo">
+
+                            <div class="form-group">
+
+                                <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="Navn" />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="LastName" id="LastName" placeholder="Efternavn" />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="Email" id="Email" placeholder="Email" />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="Adress" id="Adress" placeholder="Adresse" />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="City" id="City" placeholder="Bynavn" />
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="ZipCode" id="ZipCode" placeholder="Post nr." />
+                            </div>
+                        </form>
+                        <button id="checkOut" type="button" class="btn btn-succes btn-xs">Check ud</button>
+                        <button id="resetcart" type="button" class="btn btn-danger btn-xs">Tøm</button>
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Faktura
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Order
+                                    </th>
+                                    <th>Adresse</th>
+                                    <th>Total Pris</th>
+                                    <th>Vis</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="fakturaListe"></tbody>
+
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="OrderModal" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body">
+                    <p>One fine body&hellip;</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Luk</button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Registrer bruger</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="registerForm">
+                        <form-group>
+                            <label for="Name">UserName</label>
+                            <input type="text" class="form-control" name="UserName" placeholder="Brugernavn" />
+                        </form-group>
+                        <form-group>
+                            <label for="Name">Password</label>
+                            <input type="text" class="form-control" name="Password" placeholder="Password" />
+                        </form-group>
+                        <form-group>
+                            <label for="Name">Confirm Password</label>
+                            <input type="text" class="form-control" name="ConfirmPassword" placeholder="Confirm Password" />
+                        </form-group>
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Luk</button>
+                    <button type="button" id="btnRegister" class="btn btn-default">Register</button>
+
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Login</h4>
+                </div>
+                <div class="modal-body">
+                    <form id="loginForm">
+                        <form-group>
+                            <label for="Name">UserName</label>
+                            <input type="text" class="form-control" name="UserName" placeholder="Brugernavn" />
+                        </form-group>
+                        <form-group>
+                            <label for="Name">Password</label>
+                            <input type="text" class="form-control" name="Password" placeholder="Password" />
+                        </form-group>
+
+
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Luk</button>
+                    <button type="button" id="btnlogin" class="btn btn-primary">Login</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+    <script src="Content/Scripts/Scripts.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+
+</body>
+</html>
+
+
+
+
+<!--<div class="container">
+    <h1>Grønthandleren</h1>
+    <div class="row">
+        <div class="col-md-3 kontaktInfo">
+
+            <form id="customerInfo">
+                <h4>Kontakt informationer</h4>
+                <div class="form-group">
+
+                    <input type="text" class="form-control" name="FirstName" id="FirstName" placeholder="Navn" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" name="LastName" id="LastName" placeholder="Efternavn" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" name="Email" id="Email" placeholder="Email" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" name="Adress" id="Adress" placeholder="Adresse" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" name="City" id="City" placeholder="Bynavn" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" name="ZipCode" id="ZipCode" placeholder="Post nr." />
+                </div>
+            </form>
+            <button id="checkOut" type="button" class="btn btn-succes">Check ud</button>
+            <button id="resetcart" type="button" class="btn btn-danger">Tøm</button>
+        </div>
+        <div class="col-md-6 Indkøbskurv">
+            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+            <ul id="3cartList" class="list-group"></ul>
+
+
+            <h4>Produkter</h4>
+            <ul id="3products" class="list-group"></ul>
+
+
+        </div>
+        <div class="col-md-3">
+
+            <h4>Opret</h4>
+            <form id="createProduct">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" placeholder="Navn" />
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" name="price" placeholder="Pris" />
+                </div>
+
+                <button type="button" id="btnCreate" class="btn btn-success">Opret</button>
+            </form>
+
+            <h4>Opdater</h4>
+            <form id="updateProduct">
+                <input type="hidden" name="id" id="UpId" placeholder="Navn" />
+                <div class="form-group">
+                    <input type="text" class="form-control" name="name" id="UpName" placeholder="Navn" />
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="form-control" name="price" id="UpPrice" placeholder="Pris" />
+                </div>
+                <button type="button" id="btnUpdate" class="btn btn-primary">Update</button>
+            </form>
+
+
+        </div>
+
+    </div>
+</div>-->

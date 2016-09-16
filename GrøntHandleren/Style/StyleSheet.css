@@ -1,0 +1,36 @@
+﻿body {
+    background-color: whitesmoke !important;
+}
+
+.list-group-item {
+    min-height: 10px;
+    max-width: 100%;
+   
+    font-family: Verdana;
+    font-size: 12px;
+}
+
+.pull-right {
+    margin-left: 5px;
+}
+
+.form-control {
+   
+    border-radius: 0;
+    font-size: 12px;
+}
+
+h4 {
+    font-size: 12px;
+    font-weight: lighter;
+}
+
+
+.container {
+    margin-top: 20px;
+}
+
+
+.panel-titleNyt{
+    font-size: 14px; 
+}
